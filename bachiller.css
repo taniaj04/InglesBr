@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0088ff56;
+    margin: 0;
+    background: url('images/fondojuego.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 20px;
+    text-align: center;
+}
+h1 {
+    color: #ffffff;
+}
+p{
+    color: #ffffff;
+}
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 0, 0, 0.459);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 45%;
+
+}
+.word, .meaning {
+    padding: 10px;
+    background-color: #4ae4ffa4;
+    border: 1px solid #88d5f32c;
+    text-align: center;    
+    cursor: pointer;
+    color: #00000096; 
+}
+.word:hover, .meaning:hover {
+    background-color: #add8e6;
+    color: #000000; 
+    transform: scale(1.05);
+}
+
+.hidden {
+    visibility: hidden;
+}
+.buttons {
+    margin-top: 20px;
+}
+button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+button {
+    display: inline-block;
+    padding: 15px 40px;
+    margin-top: 15px; 
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(90deg, #176eb6, #179ce9);
+    text-decoration: none;
+    border-radius: 50px;
+    border: #52d685;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(255, 255, 255, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(90deg, #179ce9, #176eb6);
+    transform: scale(1.1);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empareja la palabra</title>
+    <link rel="stylesheet" href="bachiller.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Relaciona la palabra con su significado</h1>
+        <p>Selecciona una palabra y su significado correspondiente. ¡Veamos cuántos puedes acertar!</p>
+        
+        <div class="game-container" id="game-container">
+            <div class="column" id="words-column">
+                <div class="word" data-pair="1">I am</div>
+                <div class="word" data-pair="2">You were</div>
+                <div class="word" data-pair="3">Could</div>
+                <div class="word" data-pair="4">He was</div>
+                <div class="word" data-pair="5">We are</div>
+                <div class="word" data-pair="6">They are</div>
+                <div class="word" data-pair="7">He is</div>
+                <div class="word" data-pair="8">Could have</div>
+                <div class="word" data-pair="9">I was</div>
+                <div class="word" data-pair="10">We could</div>
+            </div>
+
+            <div class="column" id="meanings-column">
+                <div class="meaning" data-pair="1">Yo soy</div>
+                <div class="meaning" data-pair="2">Tú estabas</div>
+                <div class="meaning" data-pair="3">Podría</div>
+                <div class="meaning" data-pair="4">Él estaba</div>
+                <div class="meaning" data-pair="5">Nosotros somos</div>
+                <div class="meaning" data-pair="6">Ellos son</div>
+                <div class="meaning" data-pair="7">Él es</div>
+                <div class="meaning" data-pair="8">Podría haber</div>
+                <div class="meaning" data-pair="9">Yo estaba</div>
+                <div class="meaning" data-pair="10">Nosotros podríamos</div>
+            </div>
+        </div>
+
+        <div id="result"></div>
+        <div id="verification"></div>
+        <div class="buttons">
+            <button class="button" onclick="playSoundAndReset()">Restart</button>
+            <button class="button" onclick="playSoundAndExit()">Salir</button>
+        </div>
+    </div>
+
+    <audio id="exit-sound" src="sonido.mp3"></audio>
+    <audio id="reset-sound" src="restar.mp3"></audio>
+    <audio id="correct-sound" src="seleccion.mp3"></audio> <!-- Sonido de selección correcta -->
+
+    <script>
+        let firstSelection = null;
+        let correctMatches = 0;
+        const totalPairs = 10; 
+        let isMatching = false;
+
+        function shuffleElements(containerId) {
+            const container = document.getElementById(containerId);
+            const childrenArray = Array.from(container.children);
+            for (let i = childrenArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                container.appendChild(childrenArray[j]);
+            }
+        }
+
+        function setUpGame() {
+            document.querySelectorAll('.word, .meaning').forEach(item => {
+                item.addEventListener('click', function () {
+                    if (!isMatching) { 
+                        if (firstSelection === null) {
+                            firstSelection = this;
+                            this.style.backgroundColor = "#FFD700"; 
+                        } else {
+                            if (firstSelection.dataset.pair === this.dataset.pair) {
+                                firstSelection.style.backgroundColor = "#90EE90"; 
+                                this.style.backgroundColor = "#90EE90";
+                                firstSelection.classList.add("hidden");
+                                this.classList.add("hidden");
+                                correctMatches++;
+                                document.getElementById("correct-sound").play(); // Reproduce el sonido
+                                document.getElementById('result').textContent = "¡Buen trabajo! Sigue así.";
+                                checkCompletion();
+                            } else {
+                                firstSelection.style.backgroundColor = "#FFFFFF"; 
+                                this.style.backgroundColor = "#FFFFFF";
+                                document.getElementById('result').textContent = "¡Intenta de nuevo!";
+                            }
+                            firstSelection = null;
+                            isMatching = false; 
+                        }
+                    }
+                });
+            });
+        }
+
+        function checkCompletion() {
+            if (correctMatches === totalPairs) {
+                setTimeout(() => {
+                    alert("¡Felicitaciones, lograste emparejar todas las palabras!");
+                }, 200);
+            }
+        }
+
+        function playSoundAndReset() {
+            const sound = document.getElementById("reset-sound");
+            sound.play();
+            setTimeout(() => location.reload(), 500); 
+        }
+
+        function playSoundAndExit() {
+            const sound = document.getElementById("exit-sound");
+            sound.play(); 
+            setTimeout(() => {
+                if (confirm("¿Estás seguro de que quieres salir del juego?")) {
+                    window.location.href = "index.html"; 
+                }
+            }, 500); 
+        }
+
+        shuffleElements("words-column");
+        shuffleElements("meanings-column");
+        setUpGame();
+    </script>
+</body>
+</html>
